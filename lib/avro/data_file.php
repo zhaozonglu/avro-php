@@ -91,14 +91,14 @@ class AvroDataIO
   public static function magic() { return ('Obj' . pack('c', self::VERSION)); }
 
   /**
-   * @returns int count of bytes in the initial "magic" segment of the
+   * @return int count of bytes in the initial "magic" segment of the
    *              Avro container file header
    */
   public static function magic_size() { return strlen(self::magic()); }
 
 
   /**
-   * @returns AvroSchema object of Avro container file metadata.
+   * @return AvroSchema object of Avro container file metadata.
    */
   public static function metadata_schema()
   {
@@ -111,7 +111,7 @@ class AvroDataIO
    * @param string $file_path file_path of file to open
    * @param string $mode one of AvroFile::READ_MODE or AvroFile::WRITE_MODE
    * @param string $schema_json JSON of writer's schema
-   * @returns AvroDataIOWriter instance of AvroDataIOWriter
+   * @return AvroDataIOWriter instance of AvroDataIOWriter
    *
    * @throws AvroDataIOException if $writers_schema is not provided
    *         or if an invalid $mode is given.
@@ -143,7 +143,7 @@ class AvroDataIO
   }
 
   /**
-   * @returns array array of valid codecs
+   * @return array array of valid codecs
    */
   private static function valid_codecs()
   {
@@ -152,7 +152,7 @@ class AvroDataIO
 
   /**
    * @param string $codec
-   * @returns boolean true if $codec is a valid codec value and false otherwise
+   * @return boolean true if $codec is a valid codec value and false otherwise
    */
   public static function is_valid_codec($codec)
   {
@@ -162,7 +162,7 @@ class AvroDataIO
   /**
    * @param AvroIO $io
    * @param AvroSchema $schema
-   * @returns AvroDataIOWriter
+   * @return AvroDataIOWriter
    */
   protected function open_writer($io, $schema)
   {
@@ -173,7 +173,7 @@ class AvroDataIO
   /**
    * @param AvroIO $io
    * @param AvroSchema $schema
-   * @returns AvroDataIOReader
+   * @return AvroDataIOReader
    */
   protected function open_reader($io, $schema)
   {
@@ -277,7 +277,7 @@ class AvroDataIOReader
 
   /**
    * @internal Would be nice to implement data() as an iterator, I think
-   * @returns array of data from object container.
+   * @return array of data from object container.
    */
   public function data()
   {
@@ -349,7 +349,7 @@ class AvroDataIOReader
   /**
    * Reads the block header (which includes the count of items in the block
    * and the length in bytes of the block)
-   * @returns int length in bytes of the block.
+   * @return int length in bytes of the block.
    */
   private function read_block_header()
   {
@@ -366,7 +366,7 @@ class AvroDataIOReader
 class AvroDataIOWriter
 {
   /**
-   * @returns string a new, unique sync marker.
+   * @return string a new, unique sync marker.
    */
   private static function generate_sync_marker()
   {
@@ -478,7 +478,7 @@ class AvroDataIOWriter
 
   /**
    * Flushes biffer to AvroIO object container.
-   * @returns mixed value of $io->flush()
+   * @return mixed value of $io->flush()
    * @see AvroIO::flush()
    */
   private function flush()

@@ -185,7 +185,7 @@ class AvroStringIO extends AvroIO
    * Append bytes to this buffer.
    * (Nothing more is needed to support Avro.)
    * @param string $arg bytes to write
-   * @returns int count of bytes written.
+   * @return int count of bytes written.
    * @throws AvroIOException if $args is not a string value.
    */
   public function write($arg)
@@ -253,13 +253,13 @@ class AvroStringIO extends AvroIO
   }
 
   /**
-   * @returns int
+   * @return int
    * @see AvroIO::tell()
    */
   public function tell() { return $this->current_index; }
 
   /**
-   * @returns boolean
+   * @return boolean
    * @see AvroIO::is_eof()
    */
   public function is_eof()
@@ -269,13 +269,13 @@ class AvroStringIO extends AvroIO
 
   /**
    * No-op provided for compatibility with AvroIO interface.
-   * @returns boolean true
+   * @return boolean true
    */
   public function flush() { return true; }
 
   /**
    * Marks this buffer as closed.
-   * @returns boolean true
+   * @return boolean true
    */
   public function close()
   {
@@ -296,7 +296,7 @@ class AvroStringIO extends AvroIO
   /**
    * Appends bytes to this buffer.
    * @param string $str
-   * @returns integer count of bytes written.
+   * @return integer count of bytes written.
    */
   private function append_str($str)
   { 
@@ -310,7 +310,7 @@ class AvroStringIO extends AvroIO
   /**
    * Truncates the truncate buffer to 0 bytes and returns the pointer
    * to the beginning of the buffer.
-   * @returns boolean true
+   * @return boolean true
    */
   public function truncate()
   {
@@ -321,26 +321,26 @@ class AvroStringIO extends AvroIO
   }
 
   /**
-   * @returns int count of bytes in the buffer
+   * @return int count of bytes in the buffer
    * @internal Could probably memoize length for performance, but
    *           no need do this yet.
    */
   public function length() { return strlen($this->string_buffer); }
 
   /**
-   * @returns string
+   * @return string
    */
   public function __toString() { return $this->string_buffer; }
 
 
   /**
-   * @returns string
+   * @return string
    * @uses self::__toString()
    */
   public function string() { return $this->__toString(); }
 
   /**
-   * @returns boolean true if this buffer is closed and false
+   * @return boolean true if this buffer is closed and false
    *                       otherwise.
    */
   public function is_closed() { return $this->is_closed; }
@@ -419,7 +419,7 @@ class AvroFile extends AvroIO
 
   /**
    * @param int $len count of bytes to read.
-   * @returns string bytes read
+   * @return string bytes read
    * @throws AvroIOException if length value is negative or if the read failed
    */
   public function read($len)
@@ -452,7 +452,7 @@ class AvroFile extends AvroIO
   /**
    * @param int $offset
    * @param int $whence
-   * @returns boolean true upon success
+   * @return boolean true upon success
    * @throws AvroIOException if seek failed.
    * @see AvroIO::seek()
    */
@@ -469,7 +469,7 @@ class AvroFile extends AvroIO
 
   /**
    * Closes the file.
-   * @returns boolean true if successful.
+   * @return boolean true if successful.
    * @throws AvroIOException if there was an error closing the file.
    */
   public function close()
@@ -481,7 +481,7 @@ class AvroFile extends AvroIO
   }
 
   /**
-   * @returns boolean true if the pointer is at the end of the file,
+   * @return boolean true if the pointer is at the end of the file,
    *                  and false otherwise.
    * @see AvroIO::is_eof() as behavior differs from feof()
    */
@@ -495,7 +495,7 @@ class AvroFile extends AvroIO
   }
 
   /**
-   * @returns boolean true if the flush was successful.
+   * @return boolean true if the flush was successful.
    * @throws AvroIOException if there was an error flushing the file.
    */
   public function flush()

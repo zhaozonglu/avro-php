@@ -274,7 +274,7 @@ class AvroIOBinaryEncoder
    * encoding required by the Avro spec.
    *
    * @param float $float
-   * @returns string bytes
+   * @return string bytes
    * @see Avro::check_platform()
    */
   static function float_to_int_bits($float)
@@ -289,7 +289,7 @@ class AvroIOBinaryEncoder
    * {@link AvroIOBinaryEncoder::float_to_int_bits()} for details.
    *
    * @param double $double
-   * @returns string bytes
+   * @return string bytes
    */
   static function double_to_long_bits($double)
   {
@@ -298,7 +298,7 @@ class AvroIOBinaryEncoder
 
   /**
    * @param int|string $n
-   * @returns string long $n encoded as bytes
+   * @return string long $n encoded as bytes
    * @internal This relies on 64-bit PHP.
    */
   static public function encode_long($n)
@@ -414,7 +414,7 @@ class AvroIODatumReader
    *
    * @param AvroSchema $writers_schema
    * @param AvroSchema $readers_schema
-   * @returns boolean true if the schemas are consistent with
+   * @return boolean true if the schemas are consistent with
    *                  each other and false otherwise.
    */
   static function schemas_match($writers_schema, $readers_schema)
@@ -485,7 +485,7 @@ class AvroIODatumReader
    * @param AvroSchema $schema_two
    * @param string[] $attribute_names array of string attribute names to compare
    *
-   * @returns boolean true if the attributes match and false otherwise.
+   * @return boolean true if the attributes match and false otherwise.
    */
   static function attributes_match($schema_one, $schema_two, $attribute_names)
   {
@@ -526,7 +526,7 @@ class AvroIODatumReader
 
   /**
    * @param AvroIOBinaryDecoder $decoder
-   * @returns string
+   * @return string
    */
   public function read($decoder)
   {
@@ -752,7 +752,7 @@ class AvroIODatumReader
   /**
    * @param AvroSchema $field_schema
    * @param null|boolean|int|float|string|array $default_value
-   * @returns null|boolean|int|float|string|array
+   * @return null|boolean|int|float|string|array
    *
    * @throws AvroException if $field_schema type is unknown.
    */
@@ -868,7 +868,7 @@ class AvroIOBinaryDecoder
 
   /**
    * @param int[] array of byte ascii values
-   * @returns long decoded value
+   * @return int decoded value
    * @internal Requires 64-bit platform
    */
   public static function decode_long_from_array($bytes)
@@ -892,7 +892,7 @@ class AvroIOBinaryDecoder
    * {@link AvroIOBinaryEncoder::float_to_int_bits()} for details.
    *
    * @param string $bits
-   * @returns float
+   * @return float
    */
   static public function int_bits_to_float($bits)
   {
@@ -907,7 +907,7 @@ class AvroIOBinaryDecoder
    * {@link AvroIOBinaryEncoder::float_to_int_bits()} for details.
    *
    * @param string $bits
-   * @returns float
+   * @return float
    */
   static public function long_bits_to_double($bits)
   {
@@ -930,18 +930,18 @@ class AvroIOBinaryDecoder
   }
 
   /**
-   * @returns string the next byte from $this->io.
+   * @return string the next byte from $this->io.
    * @throws AvroException if the next byte cannot be read.
    */
   private function next_byte() { return $this->read(1); }
 
   /**
-   * @returns null
+   * @return null
    */
   public function read_null() { return null; }
 
   /**
-   * @returns boolean
+   * @return boolean
    */
   public function read_boolean()
   {
@@ -949,12 +949,12 @@ class AvroIOBinaryDecoder
   }
 
   /**
-   * @returns int
+   * @return int
    */
   public function read_int() { return (int) $this->read_long(); }
 
   /**
-   * @returns long
+   * @return int
    */
   public function read_long()
   {
@@ -973,7 +973,7 @@ class AvroIOBinaryDecoder
   }
 
   /**
-   * @returns float
+   * @return float
    */
   public function read_float()
   {
@@ -981,7 +981,7 @@ class AvroIOBinaryDecoder
   }
 
   /**
-   * @returns double
+   * @return double
    */
   public function read_double()
   {
@@ -991,18 +991,18 @@ class AvroIOBinaryDecoder
   /**
    * A string is encoded as a long followed by that many bytes
    * of UTF-8 encoded character data.
-   * @returns string
+   * @return string
    */
   public function read_string() { return $this->read_bytes(); }
 
   /**
-   * @returns string
+   * @return string
    */
   public function read_bytes() { return $this->read($this->read_long()); }
 
   /**
    * @param int $len count of bytes to read
-   * @returns string
+   * @return string
    */
   public function read($len) { return $this->io->read($len); }
 
@@ -1037,7 +1037,7 @@ class AvroIOBinaryDecoder
   public function skip($len) { $this->seek($len, AvroIO::SEEK_CUR); }
 
   /**
-   * @returns int position of pointer in AvroIO instance
+   * @return int position of pointer in AvroIO instance
    * @uses AvroIO::tell()
    */
   private function tell() { return $this->io->tell(); }
@@ -1045,7 +1045,7 @@ class AvroIOBinaryDecoder
   /**
    * @param int $offset
    * @param int $whence
-   * @returns boolean true upon success
+   * @return boolean true upon success
    * @uses AvroIO::seek()
    */
   private function seek($offset, $whence)
