@@ -182,7 +182,7 @@ class AvroGMP {
   }
 
   /**
-   * @param int|str $n integer (or string representation of integer) to encode
+   * @param int|string $n integer (or string representation of integer) to encode
    * @return string $bytes of the long $n encoded per the Avro spec
    */
   static function encode_long($n)

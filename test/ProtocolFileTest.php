@@ -32,8 +32,7 @@ class ProtocolFileTest extends PHPUnit_Framework_TestCase
     $cnt=count($this->prot_parseable);
     for ($i=0; $i<$cnt; $i++) {
       try {
-        //print($i . " " . ($this->prot_parseable[$i]?"true":"false") . " \n");
-        $prot=AvroProtocol::parse($this->prot_data[$i]);
+        AvroProtocol::parse($this->prot_data[$i]);
       } catch (AvroSchemaParseException $x) {
         // exception ok if we expected this protocol spec to be unparseable
         $this->assertEquals(false, $this->prot_parseable[$i]);

@@ -143,15 +143,6 @@ class FloatIntEncodingTest extends PHPUnit_Framework_TestCase
    */
   function normal_vals_provider()
   {
-    $ruby_to_generate_vals =<<<_RUBY
-      def d2lb(d); [d].pack('E') end
-      dary = (-10..10).to_a + [-1234.2132, -211e23]
-      dary.each {|x| b = d2lb(x); puts %/array(self::DOUBLE_TYPE, (double) #{x}, #{b.inspect}, '#{b.unpack('h*')[0]}'),/}
-      def f2ib(f); [f].pack('e') end
-      fary = (-10..10).to_a + [-1234.5, -211.3e6]
-      fary.each {|x| b = f2ib(x); puts %/array(self::FLOAT_TYPE, (float) #{x}, #{b.inspect}, '#{b.unpack('h*')[0]}'),/}
-_RUBY;
-
     return array(
                  array(self::DOUBLE_TYPE, (double) -10, "\000\000\000\000\000\000$\300", '000000000000420c'),
                  array(self::DOUBLE_TYPE, (double) -9, "\000\000\000\000\000\000\"\300", '000000000000220c'),

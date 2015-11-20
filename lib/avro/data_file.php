@@ -86,7 +86,7 @@ class AvroDataIO
   private static $metadata_schema;
 
   /**
-   * @returns the initial "magic" segment of an Avro container file header.
+   * @return string the initial "magic" segment of an Avro container file header.
    */
   public static function magic() { return ('Obj' . pack('c', self::VERSION)); }
 
@@ -122,7 +122,6 @@ class AvroDataIO
     $schema = !is_null($schema_json)
       ? AvroSchema::parse($schema_json) : null;
 
-    $io = false;
     switch ($mode)
     {
       case AvroFile::WRITE_MODE:

@@ -619,7 +619,7 @@ class AvroIODatumReader
       if ($block_count < 0)
       {
         $block_count = -$block_count;
-        $block_size = $decoder->read_long(); // Read (and ignore) block size
+        $decoder->read_long(); // Read (and ignore) block size
       }
       for ($i = 0; $i < $block_count; $i++)
         $items []= $this->read_data($writers_schema->items(),
@@ -647,8 +647,8 @@ class AvroIODatumReader
       if ($pair_count < 0)
       {
         $pair_count = -$pair_count;
-        // Note: we're not doing anything with block_size other than skipping it
-        $block_size = $decoder->read_long();
+        // Note: Ingoring what we read here
+        $decoder->read_long();
       }
 
       for ($i = 0; $i < $pair_count; $i++)

@@ -656,7 +656,7 @@ class AvroMapSchema extends AvroSchema
   }
 
   /**
-   * @returns XXX|AvroSchema
+   * @returns AvroSchema
    */
   public function values() { return $this->values; }
 
@@ -1040,7 +1040,7 @@ class AvroNamedSchemata
   /**
    * Creates a new AvroNamedSchemata instance of this schemata instance
    * with the given $schema appended.
-   * @param AvroNamedSchema schema to add to this existing schemata
+   * @param AvroNamedSchema $schema to add to this existing schemata
    * @return AvroNamedSchemata
    * @throws AvroSchemaParseException
    */
@@ -1275,7 +1275,7 @@ class AvroRecordSchema extends AvroNamedSchema
     else
       parent::__construct($schema_type, $name, $doc, $schemata);
 
-    list($x, $namespace) = $name->name_and_namespace();
+    list(, $namespace) = $name->name_and_namespace();
     $this->fields = self::parse_fields($fields, $namespace, $schemata);
   }
 

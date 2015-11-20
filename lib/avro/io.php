@@ -72,7 +72,7 @@ class AvroIO
 
   /**
    * Append bytes to this buffer. (Nothing more is needed to support Avro.)
-   * @param str $arg bytes to write
+   * @param string $arg bytes to write
    * @return int count of bytes written.
    * @throws AvroNotImplementedException
    */
@@ -184,7 +184,7 @@ class AvroStringIO extends AvroIO
   /**
    * Append bytes to this buffer.
    * (Nothing more is needed to support Avro.)
-   * @param str $arg bytes to write
+   * @param string $arg bytes to write
    * @returns int count of bytes written.
    * @throws AvroIOException if $args is not a string value.
    */
@@ -376,6 +376,7 @@ class AvroFile extends AvroIO
    * AvroFile constructor.
    * @param $file_path
    * @param string $mode
+   * @throws AvroIOException
    */
   public function __construct($file_path, $mode = self::READ_MODE)
   {
@@ -404,7 +405,7 @@ class AvroFile extends AvroIO
   }
 
   /**
-   * @param str $str
+   * @param string $str
    * @return int count of bytes written
    * @throws AvroIOException if write failed.
    */
