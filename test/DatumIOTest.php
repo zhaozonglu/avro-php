@@ -19,10 +19,16 @@
 
 require_once('test_helper.php');
 
+/**
+ * Class DatumIOTest
+ */
 class DatumIOTest extends PHPUnit_Framework_TestCase
 {
   /**
    * @dataProvider data_provider
+   * @param $schema_json
+   * @param $datum
+   * @param $binary
    */
   function test_datum_round_trip($schema_json, $datum, $binary)
   {
@@ -45,6 +51,9 @@ class DatumIOTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($datum, $read_datum);
   }
 
+  /**
+   * @return array
+   */
   function data_provider()
   {
     return array(array('"null"', null, ''),
@@ -96,6 +105,9 @@ class DatumIOTest extends PHPUnit_Framework_TestCase
       );
   }
 
+  /**
+   * @return array
+   */
   function default_provider()
   {
     return array(array('"null"', 'null', null),
@@ -120,6 +132,9 @@ class DatumIOTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider default_provider
+   * @param $field_schema_json
+   * @param $default_json
+   * @param $default_value
    */
   function test_field_default_value($field_schema_json,
                                     $default_json, $default_value)

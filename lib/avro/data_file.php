@@ -310,6 +310,10 @@ class AvroDataIOReader
 
   /**
    * @uses AvroIO::seek()
+   * @param $offset
+   * @param $whence
+   * @return bool
+   * @throws AvroNotImplementedException
    */
   private function seek($offset, $whence)
   {
@@ -318,6 +322,9 @@ class AvroDataIOReader
 
   /**
    * @uses AvroIO::read()
+   * @param $len
+   * @return string
+   * @throws AvroNotImplementedException
    */
   private function read($len) { return $this->io->read($len); }
 
@@ -326,6 +333,9 @@ class AvroDataIOReader
    */
   private function is_eof() { return $this->io->is_eof(); }
 
+  /**
+   * @return bool
+   */
   private function skip_sync()
   {
     $proposed_sync_marker = $this->read(AvroDataIO::SYNC_SIZE);
@@ -409,6 +419,7 @@ class AvroDataIOWriter
    * @param AvroIO $io
    * @param AvroIODatumWriter $datum_writer
    * @param AvroSchema $writers_schema
+   * @throws AvroDataIOException
    */
   public function __construct($io, $datum_writer, $writers_schema=null)
   {
@@ -520,6 +531,7 @@ class AvroDataIOWriter
   /**
    * @param string $bytes
    * @uses AvroIO::write()
+   * @return int
    */
   private function write($bytes) { return $this->io->write($bytes); }
 
@@ -527,6 +539,7 @@ class AvroDataIOWriter
    * @param int $offset
    * @param int $whence
    * @uses AvroIO::seek()
+   * @return bool
    */
   private function seek($offset, $whence)
   {

@@ -116,14 +116,15 @@ class AvroDebug
   /**
    * @param string $str
    * @param string $format one of 'ctrl', 'hex', or 'dec' for control,
-                           hexadecimal, or decimal format for bytes.
-                           - ctrl: ASCII control characters represented as text.
-                             For example, the null byte is represented as 'NUL'.
-                             Visible ASCII characters represent themselves, and
-                             others are represented as a decimal ('%03d')
-                           - hex: bytes represented in hexadecimal ('%02X')
-                           - dec: bytes represented in decimal ('%03d')
-   * @returns string[] array of bytes represented in the given format.
+   * hexadecimal, or decimal format for bytes.
+   * - ctrl: ASCII control characters represented as text.
+   * For example, the null byte is represented as 'NUL'.
+   * Visible ASCII characters represent themselves, and
+   * others are represented as a decimal ('%03d')
+   * - hex: bytes represented in hexadecimal ('%02X')
+   * - dec: bytes represented in decimal ('%03d')
+   * @return string[] array of bytes represented in the given format.
+   * @throws AvroException
    */
   static function ascii_array($str, $format='ctrl')
   {

@@ -19,6 +19,9 @@
 
 require_once('test_helper.php');
 
+/**
+ * Class StringIOTest
+ */
 class StringIOTest extends PHPUnit_Framework_TestCase
 {
 

@@ -20,27 +20,30 @@
 require_once('test_helper.php');
 
 // near-verbatim port of test_protocol.py
+/**
+ * Class ProtocolFileTest
+ */
 class ProtocolFileTest extends PHPUnit_Framework_TestCase
 {
-	protected function setUp() {
-	}
-	
-	public function testParsing() {
-		$cnt=count($this->prot_parseable);
-		for ($i=0; $i<$cnt; $i++) {
-			try {
-				//print($i . " " . ($this->prot_parseable[$i]?"true":"false") . " \n");
-				$prot=AvroProtocol::parse($this->prot_data[$i]);
-			} catch (AvroSchemaParseException $x) {
-				// exception ok if we expected this protocol spec to be unparseable
-				$this->assertEquals(false, $this->prot_parseable[$i]);
-			}
-		}
-	}
-	
-	// test data
-	private $prot_parseable=array(true, true, true, true, true, true, false, true, true);
-	private $prot_data = array(
+  protected function setUp() {
+  }
+
+  public function testParsing() {
+    $cnt=count($this->prot_parseable);
+    for ($i=0; $i<$cnt; $i++) {
+      try {
+        //print($i . " " . ($this->prot_parseable[$i]?"true":"false") . " \n");
+        $prot=AvroProtocol::parse($this->prot_data[$i]);
+      } catch (AvroSchemaParseException $x) {
+        // exception ok if we expected this protocol spec to be unparseable
+        $this->assertEquals(false, $this->prot_parseable[$i]);
+      }
+    }
+  }
+
+  // test data
+  private $prot_parseable=array(true, true, true, true, true, true, false, true, true);
+  private $prot_data = array(
 <<<'DATUM'
 {
   "namespace": "com.acme",
@@ -349,5 +352,5 @@ DATUM
   }
 }
 DATUM
-	);
+  );
 }

@@ -19,6 +19,9 @@
 
 require_once('test_helper.php');
 
+/**
+ * Class SchemaExample
+ */
 class SchemaExample
 {
   var $schema_string;
@@ -26,6 +29,15 @@ class SchemaExample
   var $name;
   var $comment;
   var $normalized_schema_string;
+
+  /**
+   * SchemaExample constructor.
+   * @param $schema_string
+   * @param $is_valid
+   * @param null $normalized_schema_string
+   * @param null $name
+   * @param null $comment
+   */
   function __construct($schema_string, $is_valid, $normalized_schema_string=null,
                        $name=null, $comment=null)
   {
@@ -38,11 +50,17 @@ class SchemaExample
   }
 }
 
+/**
+ * Class SchemaTest
+ */
 class SchemaTest extends PHPUnit_Framework_TestCase
 {
   static $examples = array();
   static $valid_examples = array();
 
+  /**
+   * @return array
+   */
   protected static function make_primitive_examples()
   {
     $examples = array();
@@ -426,6 +444,9 @@ class SchemaTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(json_decode('"boolean"'), 'boolean');
   }
 
+  /**
+   * @return array
+   */
   function schema_examples_provider()
   {
     self::make_examples();
@@ -433,11 +454,11 @@ class SchemaTest extends PHPUnit_Framework_TestCase
     foreach (self::$examples as $example)
       $ary []= array($example);
     return $ary;
-    return array(array(1), array(2), array(3));
   }
 
   /**
    * @dataProvider schema_examples_provider
+   * @param $example
    */
   function test_parse($example)
   {

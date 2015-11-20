@@ -382,7 +382,9 @@ class AvroSchema
   }
 
   /**
-   * @returns boolean true if $datum is valid for $expected_schema
+   * @param $expected_schema
+   * @param $datum
+   * @return bool true if $datum is valid for $expected_schema
    *                  and false otherwise.
    * @throws AvroSchemaParseException
    */
@@ -510,7 +512,8 @@ class AvroSchema
   public function __toString() { return json_encode($this->to_avro()); }
 
   /**
-   * @returns mixed value of the attribute with the given attribute name
+   * @param $attribute
+   * @return mixed value of the attribute with the given attribute name
    */
   public function attribute($attribute) { return $this->$attribute(); }
 
@@ -691,6 +694,7 @@ class AvroUnionSchema extends AvroSchema
    * @param AvroSchema[] $schemas list of schemas in the union
    * @param string $default_namespace namespace of enclosing schema
    * @param AvroNamedSchemata &$schemata
+   * @throws AvroSchemaParseException
    */
   public function __construct($schemas, $default_namespace, &$schemata=null)
   {
@@ -734,7 +738,8 @@ class AvroUnionSchema extends AvroSchema
   public function schemas() { return $this->schemas; }
 
   /**
-   * @returns AvroSchema the particular schema from the union for
+   * @param $index
+   * @return AvroSchema the particular schema from the union for
    * the given (zero-based) index.
    * @throws AvroSchemaParseException if the index is invalid for this schema.
    */
@@ -819,6 +824,9 @@ class AvroNamedSchema extends AvroSchema
    */
   public function fullname() { return $this->name->fullname(); }
 
+  /**
+   * @return string
+   */
   public function qualified_name() { return $this->name->qualified_name(); }
 
 }
@@ -839,7 +847,9 @@ class AvroName
   const NAME_REGEXP = '/^[A-Za-z_][A-Za-z0-9_]*$/';
 
   /**
-   * @returns string[] array($name, $namespace)
+   * @param $name
+   * @param null $namespace
+   * @return string[] array($name, $namespace)
    */
   public static function extract_namespace($name, $namespace=null)
   {
@@ -853,7 +863,8 @@ class AvroName
   }
 
   /**
-   * @returns boolean true if the given name is well-formed
+   * @param $name
+   * @return bool true if the given name is well-formed
    *          (is a non-null, non-empty string) and false otherwise
    */
   public static function is_well_formed_name($name)
@@ -916,6 +927,7 @@ class AvroName
    * @param string $name
    * @param string $namespace
    * @param string $default_namespace
+   * @throws AvroSchemaParseException
    */
   public function __construct($name, $namespace, $default_namespace)
   {
@@ -980,7 +992,8 @@ class AvroNamedSchemata
   private $schemata;
 
   /**
-   * @param AvroNamedSchemata[]
+   * @param array $schemata
+   * @internal param $AvroNamedSchemata []
    */
   public function __construct($schemata=array())
   {
@@ -1028,7 +1041,8 @@ class AvroNamedSchemata
    * Creates a new AvroNamedSchemata instance of this schemata instance
    * with the given $schema appended.
    * @param AvroNamedSchema schema to add to this existing schemata
-   * @returns AvroNamedSchemata
+   * @return AvroNamedSchemata
+   * @throws AvroSchemaParseException
    */
   public function clone_with_new_schema($schema)
   {
@@ -1098,7 +1112,8 @@ class AvroEnumSchema extends AvroNamedSchema
 
   /**
    * @param int $index
-   * @returns string enum schema symbol with the given (zero-based) index
+   * @return string enum schema symbol with the given (zero-based) index
+   * @throws AvroException
    */
   public function symbol_by_index($index)
   {
@@ -1109,7 +1124,8 @@ class AvroEnumSchema extends AvroNamedSchema
 
   /**
    * @param string $symbol
-   * @returns int the index of the given $symbol in the enum schema
+   * @return int the index of the given $symbol in the enum schema
+   * @throws AvroException
    */
   public function symbol_index($symbol)
   {
@@ -1147,6 +1163,7 @@ class AvroFixedSchema extends AvroNamedSchema
    * @param string $doc Set to null, as fixed schemas don't have doc strings
    * @param int $size byte count of this fixed schema data value
    * @param AvroNamedSchemata &$schemata
+   * @throws AvroSchemaParseException
    */
   public function __construct($name, $doc, $size, &$schemata=null)
   {
@@ -1239,12 +1256,12 @@ class AvroRecordSchema extends AvroNamedSchema
 
   /**
    * @param string $name
-   * @param string $namespace
    * @param string $doc
    * @param array $fields
    * @param AvroNamedSchemata &$schemata
    * @param string $schema_type schema type name
    * @throws AvroSchemaParseException
+   * @internal param string $namespace
    */
   public function __construct($name, $doc, $fields, &$schemata=null,
                               $schema_type=AvroSchema::RECORD_SCHEMA)
@@ -1396,12 +1413,14 @@ class AvroField extends AvroSchema
   private $is_type_from_schemata;
 
   /**
-   * @param string $type
    * @param string $name
    * @param AvroSchema $schema
    * @param boolean $is_type_from_schemata
+   * @param $has_default
    * @param string $default
    * @param string $order
+   * @throws AvroSchemaParseException
+   * @internal param string $type
    * @todo Check validity of $default value
    * @todo Check validity of $order value
    */

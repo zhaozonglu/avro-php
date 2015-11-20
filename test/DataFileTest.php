@@ -19,13 +19,23 @@
 
 require_once('test_helper.php');
 
+/**
+ * Class DataFileTest
+ */
 class DataFileTest extends PHPUnit_Framework_TestCase
 {
   private $data_files;
   const REMOVE_DATA_FILES = true;
 
+  /**
+   * @return string
+   */
   static function current_timestamp() { return strftime("%Y%m%dT%H%M%S"); }
 
+  /**
+   * @param $data_file
+   * @return string
+   */
   protected function add_data_file($data_file)
   {
     if (is_null($this->data_files))
@@ -36,6 +46,9 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     return $full;
   }
 
+  /**
+   * @param $data_file
+   */
   protected static function remove_data_file($data_file)
   {
     if (file_exists($data_file))

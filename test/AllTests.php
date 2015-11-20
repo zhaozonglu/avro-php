@@ -28,8 +28,14 @@ require_once('DatumIOTest.php');
 require_once('ProtocolFileTest.php');
 // InterOpTest tests are run separately.
 
+/**
+ * Class AllTests
+ */
 class AllTests
 {
+  /**
+   * @return PHPUnit_Framework_TestSuite
+   */
   public static function suite()
   {
     $suite = new PHPUnit_Framework_TestSuite('AvroAllTests');

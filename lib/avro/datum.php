@@ -90,9 +90,10 @@ class AvroIODatumWriter
    * @param AvroSchema $writers_schema
    * @param $datum
    * @param AvroIOBinaryEncoder $encoder
-   * @returns mixed
-   *
+   * @return mixed
+   * @throws AvroException
    * @throws AvroIOTypeException if $datum is invalid for $writers_schema
+   * @throws AvroSchemaParseException
    */
   function write_data($writers_schema, $datum, $encoder)
   {
@@ -164,6 +165,13 @@ class AvroIODatumWriter
     return $encoder->write_long(0);
   }
 
+  /**
+   * @param $writers_schema
+   * @param $datum
+   * @param $encoder
+   * @throws AvroException
+   * @throws AvroIOTypeException
+   */
   private function write_map($writers_schema, $datum, $encoder)
   {
     $datum_count = count($datum);
@@ -179,6 +187,14 @@ class AvroIODatumWriter
     $encoder->write_long(0);
   }
 
+  /**
+   * @param $writers_schema
+   * @param $datum
+   * @param $encoder
+   * @throws AvroException
+   * @throws AvroIOTypeException
+   * @throws AvroSchemaParseException
+   */
   private function write_union($writers_schema, $datum, $encoder)
   {
     $datum_schema_index = -1;
@@ -198,12 +214,24 @@ class AvroIODatumWriter
     $this->write_data($datum_schema, $datum, $encoder);
   }
 
+  /**
+   * @param $writers_schema
+   * @param $datum
+   * @param $encoder
+   * @return mixed
+   */
   private function write_enum($writers_schema, $datum, $encoder)
   {
     $datum_index = $writers_schema->symbol_index($datum);
     return $encoder->write_int($datum_index);
   }
 
+  /**
+   * @param $writers_schema
+   * @param $datum
+   * @param $encoder
+   * @return mixed
+   */
   private function write_fixed($writers_schema, $datum, $encoder)
   {
     /**
@@ -213,6 +241,13 @@ class AvroIODatumWriter
     return $encoder->write($datum);
   }
 
+  /**
+   * @param $writers_schema
+   * @param $datum
+   * @param $encoder
+   * @throws AvroException
+   * @throws AvroIOTypeException
+   */
   private function write_record($writers_schema, $datum, $encoder)
   {
     foreach ($writers_schema->fields() as $field)
@@ -297,6 +332,7 @@ class AvroIOBinaryEncoder
 
   /**
    * @param null $datum actual value is ignored
+   * @return null
    */
   function write_null($datum) { return null; }
 
@@ -506,7 +542,12 @@ class AvroIODatumReader
    * @param AvroIOBinaryDecoder $decoder
    */
   /**
-   * @returns mixed
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return mixed
+   * @throws AvroException
+   * @throws AvroIOSchemaMatchException
    */
   public function read_data($writers_schema, $readers_schema, $decoder)
   {
@@ -562,7 +603,12 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns array
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return array
+   * @throws AvroException
+   * @throws AvroIOSchemaMatchException
    */
   public function read_array($writers_schema, $readers_schema, $decoder)
   {
@@ -585,7 +631,12 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns array
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return array
+   * @throws AvroException
+   * @throws AvroIOSchemaMatchException
    */
   public function read_map($writers_schema, $readers_schema, $decoder)
   {
@@ -613,7 +664,12 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns mixed
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return mixed
+   * @throws AvroException
+   * @throws AvroIOSchemaMatchException
    */
   public function read_union($writers_schema, $readers_schema, $decoder)
   {
@@ -623,7 +679,10 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns string
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return string
    */
   public function read_enum($writers_schema, $readers_schema, $decoder)
   {
@@ -635,7 +694,10 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns string
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return string
    */
   public function read_fixed($writers_schema, $readers_schema, $decoder)
   {
@@ -643,7 +705,12 @@ class AvroIODatumReader
   }
 
   /**
-   * @returns array
+   * @param $writers_schema
+   * @param $readers_schema
+   * @param $decoder
+   * @return array
+   * @throws AvroException
+   * @throws AvroIOSchemaMatchException
    */
   public function read_record($writers_schema, $readers_schema, $decoder)
   {
@@ -746,6 +813,8 @@ class AvroIODatumReader
   /**
    * @param AvroSchema $writers_schema
    * @param AvroIOBinaryDecoder $decoder
+   * @return
+   * @throws AvroException
    */
   private function skip_data($writers_schema, $decoder)
   {
@@ -937,6 +1006,9 @@ class AvroIOBinaryDecoder
    */
   public function read($len) { return $this->io->read($len); }
 
+  /**
+   * @return null
+   */
   public function skip_null() { return null; }
 
   public function skip_boolean() { return $this->skip(1); }

@@ -18,6 +18,9 @@
  */
 require_once('test_helper.php');
 
+/**
+ * Class FloatIntEncodingTest
+ */
 class FloatIntEncodingTest extends PHPUnit_Framework_TestCase
 {
   const FLOAT_TYPE = 'float';
@@ -91,6 +94,9 @@ class FloatIntEncodingTest extends PHPUnit_Framework_TestCase
 
   }
 
+  /**
+   * @return array
+   */
   function special_vals_provider()
   {
     self::make_special_vals();
@@ -102,12 +108,18 @@ class FloatIntEncodingTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider special_vals_provider
+   * @param $type
+   * @param $val
+   * @param $bits
    */
   function test_encoding_special_values($type, $val, $bits)
   {
     $this->assert_encode_values($type, $val, $bits);
   }
 
+  /**
+   * @return array
+   */
   function nan_vals_provider()
   {
     self::make_special_vals();
@@ -117,12 +129,18 @@ class FloatIntEncodingTest extends PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider nan_vals_provider
+   * @param $type
+   * @param $val
+   * @param $bits
    */
   function test_encoding_nan_values($type, $val, $bits)
   {
     $this->assert_encode_nan_values($type, $val, $bits);
   }
 
+  /**
+   * @return array
+   */
   function normal_vals_provider()
   {
     $ruby_to_generate_vals =<<<_RUBY
@@ -185,6 +203,9 @@ _RUBY;
       );
   }
 
+  /**
+   * @return array
+   */
   function float_vals_provider()
   {
     $ary = array();
@@ -196,6 +217,9 @@ _RUBY;
     return $ary;
   }
 
+  /**
+   * @return array
+   */
   function double_vals_provider()
   {
     $ary = array();
@@ -210,6 +234,9 @@ _RUBY;
 
   /**
    * @dataProvider float_vals_provider
+   * @param $type
+   * @param $val
+   * @param $bits
    */
   function test_encoding_float_values($type, $val, $bits)
   {
@@ -218,12 +245,20 @@ _RUBY;
 
   /**
    * @dataProvider double_vals_provider
+   * @param $type
+   * @param $val
+   * @param $bits
    */
   function test_encoding_double_values($type, $val, $bits)
   {
     $this->assert_encode_values($type, $val, $bits);
   }
 
+  /**
+   * @param $type
+   * @param $val
+   * @param $bits
+   */
   function assert_encode_values($type, $val, $bits)
   {
     if (self::FLOAT_TYPE == $type)
@@ -255,6 +290,11 @@ _RUBY;
                                 'ROUND TRIP BITS', $val, $round_trip_value));
   }
 
+  /**
+   * @param $type
+   * @param $val
+   * @param $bits
+   */
   function assert_encode_nan_values($type, $val, $bits)
   {
     if (self::FLOAT_TYPE == $type)
