@@ -33,6 +33,12 @@
 class AvroException extends Exception {}
 
 /**
+ * Unimplemented feature exception.
+ * @package Avro
+ */
+class AvroNotImplementedException extends AvroException {}
+
+/**
  * Library-level class for PHP Avro port.
  *
  * Contains library details such as version number and platform checks.
