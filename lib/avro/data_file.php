@@ -209,12 +209,12 @@ class AvroDataIOReader
   /**
    * @var string
    */
-  private $sync_marker;
+  public $sync_marker;
 
   /**
    * @var array object container metadata
    */
-  private $metadata;
+  public $metadata;
 
   /**
    * @var int count of items in block
