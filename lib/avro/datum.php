@@ -252,10 +252,10 @@ class AvroIODatumWriter
   {
     foreach ($writers_schema->fields() as $field)
     {
-      if(array_key_exists($field->name(), $datum))
-      {
-        $this->write_data($field->type(), $datum[$field->name()], $encoder);
+      if(!array_key_exists($field->name(), $datum)){
+          $datum[$field->name()] = $field->default_value();
       }
+      $this->write_data($field->type(), $datum[$field->name()], $encoder);
     }
   }
 
