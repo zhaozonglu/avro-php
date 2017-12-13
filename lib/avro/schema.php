@@ -445,8 +445,14 @@ class AvroSchema
         if (is_array($datum))
         {
           foreach ($expected_schema->fields() as $field)
+          {
+            if(!array_key_exists($field->name(), $datum) && $field->has_default_value())
+              continue;
             if (!array_key_exists($field->name(), $datum) || !self::is_valid_datum($field->type(), $datum[$field->name()]))
               return false;
+          }
+            
+          }
           return true;
         }
         return false;
